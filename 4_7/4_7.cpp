@@ -6,26 +6,23 @@
 DWORD WINAPI CheckEscape(LPVOID lpParam) {
     while (GetAsyncKeyState(VK_ESCAPE) == 0) {
         //sleep 
-        Sleep(10);
+        Sleep(300);
     }
     exit(0);
 
 }
 
-double cin_double_with_check()
-{
-    double val;
-    string s;
-    while (1) {
-        getline(cin,s);
-        if (s == "") continue;
-        char* p;
-        val = strtod(s.c_str(), &p);
-        if (*p == 0) return val;
-        else cout << "Invalid input! Only decimal value is allowed.\n" << "Try again\n";
-    }
+
+// Checks if the string can be converted to a double
+bool checkIsDouble(string inputString) {
+    char* end;
+    double result = strtod(inputString.c_str(), &end);
+    if (end == inputString.c_str() || *end != '\0') return false;
+    return true;
 }
 
+
+// Converts double to a string and removes trailing zeros as well as the decimal point if any.
 string rm_end_zeros(double val)
 {
     string valAsString = to_string(val);
@@ -42,48 +39,93 @@ string rm_end_zeros(double val)
     return valAsString;
 }
 
+// Rounds a value using the rounding rule of natural numbers
+double round_d(double var)
+{
+    // 37.66666 * 100 =3766.66
+    // 3766.66 + .5 =3767.16    for rounding off value
+    // then type cast to int so value is 3767
+    // then divided by 100 so the value converted into 37.67
+    double value = (int)(var * 100 + .5);
+    return (double)value / 100;
+}
+
+
 int main()
 {
     CreateThread(NULL, 0, CheckEscape, NULL, 0, NULL);
     double operand;
-    string operation;
+    string operation, operand_as_str{};
     vector<double> operands;
+    vector<string> numbers;
+    numbers.push_back("zero");
+    numbers.push_back("one");
+    numbers.push_back("two");
+    numbers.push_back("three");
+    numbers.push_back("four");
+    numbers.push_back("five");
+    numbers.push_back("six");
+    numbers.push_back("seven");
+    numbers.push_back("eight");
+    numbers.push_back("nine");
 
-    cout.setf(ios::fixed);
-    cout << "Enter two operands and operation:'\n'";
-    cout << "Allowed operations are '+', '-', '*', '/', 'plus', 'minus', 'mul', 'div'.\n";
-    cout << "To abort the program press Esc \n";
+    const string GREETINGS = "Enter two operands and operation:'\n'"
+                            "Allowed operand values are either any floating point value or the string representation of any digit 1..9\n"
+                            "Allowed operations are '+', '-', '*', '/', 'plus', 'minus', 'mul', 'div'.\n"
+                            "To abort the program press Esc \n";
+
+    cout << GREETINGS;
 
     while (true)
-    { 
+    {
         int i = 0;
         operands.clear();
         while (i < 2)
         {
             if (i == 0) cout << "\nEnter the 1st operand\n";
-            else cout << "Enter the 2nd operand\n";
-            operand = cin_double_with_check();
-            operands.push_back(operand);
-            ++i;
-        }
+            else cout << "\nEnter the 2nd operand\n";
+            getline(cin, operand_as_str);
 
+            if (operand_as_str == "") { cout << "Can't be empty. Please, type anything...\n"; continue; }
+            else if (checkIsDouble(operand_as_str)) // if entered value is can be coverted to double
+            {
+                operand = stod(operand_as_str);
+                operands.push_back(operand);
+                ++i;
+            }
+            else
+            {
+                bool success = false;
+                for (int i = 0; i < numbers.size(); ++i) // check if the value is a string representation of any digit 1..9
+                {
+                    if (operand_as_str == numbers[i])
+                    {
+                        operands.push_back(i);
+                        success = true;
+                        break;
+                    }
+                }
+                if (success) { ++i; }
+                else { cout << "Unknown value\n"; continue; }
+            }
+        }
         cout << "Enter an operation\n";
         while (getline(cin, operation))
         {
-            cout << setprecision(2);
+            // Output results depending on operation type
             if (operation == "+" || operation == "plus")
             {
-                cout << "The sum of " << rm_end_zeros(operands[0]) << " and " << rm_end_zeros(operands[1]) << " is " <<  rm_end_zeros(operands[0] + operands[1]) << endl;
+                cout << "The sum of " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] + operands[1])) << endl;
                 break;
             }
             else if (operation == "-" || operation == "minus")
             {
-                cout << "The difference between " << rm_end_zeros(operands[0]) << " and " << rm_end_zeros(operands[1]) << " is " << rm_end_zeros(operands[0] - operands[1]) << endl;
+                cout << "The difference between " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] - operands[1])) << endl;
                 break;
             }
             else if (operation == "*" || operation == "mul")
             {
-                cout << "The product of " << rm_end_zeros(operands[0]) << " and " << rm_end_zeros(operands[1]) << " is " << rm_end_zeros(operands[0] * operands[1]) << endl;
+                cout << "The product of " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] * operands[1])) << endl;
                 break;
             }
             else if (operation == "/" || operation == "div") {
@@ -93,12 +135,12 @@ int main()
                     }
                     else if (operands[0] == 0)
                     {
-                        cout << "The quotient of " << 0 << " and " << rm_end_zeros(operands[1]) << " is 0" << endl;
+                        cout << "The quotient of " << 0 << " and " << rm_end_zeros(round_d(operands[1])) << " is 0" << endl;
                         break;
                     }
                     else
                     {
-                        cout << "The quotient of " << rm_end_zeros(operands[0]) << " and " << rm_end_zeros(operands[1]) << " is " << operands[0] / operands[1] << endl;
+                        cout << "The quotient of " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] / operands[1])) << endl;
                         break;
                     }
                 }
@@ -107,11 +149,9 @@ int main()
                     break;
                 }
             }
-            else if (operation == "q") { cout << "Exiting the program.." << endl; return 0; }
             else cout << "'" << operation << "' - unknown operation type.\n";
             cout << "Enter an operation\n";
         }
-        
     }
     return 0;
 }
