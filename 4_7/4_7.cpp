@@ -115,17 +115,17 @@ int main()
             // Output results depending on operation type
             if (operation == "+" || operation == "plus")
             {
-                cout << "The sum of " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] + operands[1])) << endl;
+                cout << "The sum of " << round_d(operands[0]) << " and " << round_d(operands[1]) << " is " << round_d(operands[0] + operands[1]) << endl;
                 break;
             }
             else if (operation == "-" || operation == "minus")
             {
-                cout << "The difference between " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] - operands[1])) << endl;
+                cout << "The difference between " << round_d(operands[0]) << " and " <<round_d(operands[1]) << " is " << round_d(operands[0] - operands[1]) << endl;
                 break;
             }
             else if (operation == "*" || operation == "mul")
             {
-                cout << "The product of " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] * operands[1])) << endl;
+                cout << "The product of " << round_d(operands[0]) << " and " << round_d(operands[1]) << " is " << round_d(operands[0] * operands[1]) << endl;
                 break;
             }
             else if (operation == "/" || operation == "div") {
@@ -135,12 +135,12 @@ int main()
                     }
                     else if (operands[0] == 0)
                     {
-                        cout << "The quotient of " << 0 << " and " << rm_end_zeros(round_d(operands[1])) << " is 0" << endl;
+                        cout << "The quotient of " << 0 << " and " << round_d(operands[1]) << " is 0" << endl;
                         break;
                     }
                     else
                     {
-                        cout << "The quotient of " << rm_end_zeros(round_d(operands[0])) << " and " << rm_end_zeros(round_d(operands[1])) << " is " << rm_end_zeros(round_d(operands[0] / operands[1])) << endl;
+                        cout << "The quotient of " << round_d(operands[0]) << " and " << round_d(operands[1]) << " is " << round_d(operands[0] / operands[1]) << endl;
                         break;
                     }
                 }
