@@ -31,38 +31,50 @@ int cin_positive_int()
         }
         break;
     } while (true);
+    while (cin.get() != '\n');
     return val;
 }
 
+
 int main()
 {
-    vector<int> nums;
-    int size, num;
+    vector <string> strings;
+    int size, mode = 1;
+    string str;
     cout << "Enter vector size" << endl;
     size = cin_positive_int();
     cout << "Enter vector elements. Press Enter after entering each one." << endl;
     int i = 0;
-    // Fill the vector with positive integers
+
+    // Fill the vector with strings
     while (i < size)
     {
-        num = cin_positive_int();
-        nums.push_back(num);
+        getline(cin, str);
+        strings.push_back(str);
         i++;
     }
-    sort(nums);
-    int mode = 1;
+    // Sort strings vector by length
+    sort(strings.begin(), strings.end(), []
+    (const string& first, const string& second) {
+            return first.size() < second.size();
+        });
+    cout << endl << "Strings by ascending length" << endl;
+    cout << setw(20) << left << "STRING" << right << setw(4) << fixed << "LENGTH" << endl;
+    for (string str : strings)
+        cout << setw(20) << left << str << right << setw(4) << fixed << str.size() << endl;
+
     /* Iterate over the vector and accumulate repeatments if current value equals to next one.
        If neighboring values are not equal, reset repeatment value to 1 and continue the loop.
        Along the way store and update max repeatments */
-    for (int i = 0, cur_reps = 1; i < nums.size(); i++)
+    for (int i = 0, cur_reps = 1; i < strings.size(); i++)
     {
-        if (i < nums.size()-1 && nums[i] == nums[i + 1])
-        {
-            cur_reps++;
-            continue;
+        if (i < strings.size() - 1 && strings[i].size() == strings[i + 1].size()) {
+            cur_reps++; continue;
         }
         if (cur_reps > mode) mode = cur_reps;
         cur_reps = 1;
     }
-    cout << "Mode of the current set is " << mode << endl;
+    cout << endl << setw(35) << left << "Min of the current sequence is " << right << setw(4) << fixed << strings[0].size() << endl;
+    cout << setw(35) << left << "Max of the current sequence is " << right << setw(4) << fixed << strings.back().size() << endl;
+    cout << setw(35) << left << "Mode of the current sequence is " << right << setw(4) << fixed << mode << endl;
 }
