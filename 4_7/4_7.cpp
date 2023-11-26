@@ -120,7 +120,7 @@ int main()
             }
             else if (operation == "-" || operation == "minus")
             {
-                cout << "The difference between " << round_d(operands[0]) << " and " <<round_d(operands[1]) << " is " << round_d(operands[0] - operands[1]) << endl;
+                cout << "The difference between " << round_d(operands[0]) << " and " << round_d(operands[1]) << " is " << round_d(operands[0] - operands[1]) << endl;
                 break;
             }
             else if (operation == "*" || operation == "mul")
