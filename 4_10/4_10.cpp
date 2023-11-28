@@ -15,7 +15,7 @@ DWORD WINAPI CheckEscape(LPVOID lpParam) {
 
 
 // Checks for positive integers, throws an error othewise.
-// Returns an integer.
+// Returns an integer on success.
 int cin_positive_int()
 {
     int val;
