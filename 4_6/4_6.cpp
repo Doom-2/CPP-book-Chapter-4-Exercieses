@@ -5,7 +5,7 @@ int main()
 {
     int digit;
     string  digit_as_str{},
-            greeting = "Enter a digit or 'q' to quit\n",
+            greeting = "Enter a digit or its corresponding spelled-out value, or 'q' to quit\n",
             unknown = "Unknown value\n";
     vector<string> numbers;
     numbers.push_back("zero");
