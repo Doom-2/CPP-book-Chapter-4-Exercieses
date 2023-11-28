@@ -36,16 +36,14 @@ double cin_double_with_check(const char ch)
 
 
 // Rounds a value to n decimal places according to the precision, using the rounding rule of natural numbers
-double round_d(double var, int precision)
+double round_d(double var, int precision=2)
 {
 	// if precision = 3 then
 	// 37.66666 * 10^3 =37666.66
-	// 37666.66 + .5 =37667.1    for rounding off value
-	// then type cast to <int> so value is 37667
-	// then divided by 10^3 so the value converted into 37.667
+	// then round value to the nearest <int>, so value is 37667
+	// then divided by 10^3, so the value converted into 37.667
 	if (precision < 0) precision = 0;
-	double value = (var >= 0) ? (int)(var * pow(10, precision) + .5) : (int)(var * pow(10, precision) - .5);
-	return value / pow(10, precision);
+	return round(var * pow(10, precision)) / pow(10, precision);
 }
 
 
