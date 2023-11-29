@@ -59,9 +59,9 @@ int main()
             return first.size() < second.size();
         });
     cout << endl << "Strings by ascending length" << endl;
-    cout << setw(20) << left << "STRING" << right << setw(4) << fixed << "LENGTH" << endl;
+    cout << setw(20) << left << "STRING" << right << setw(4) << "LENGTH" << endl;
     for (string str : strings)
-        cout << setw(20) << left << str << right << setw(4) << fixed << str.size() << endl;
+        cout << setw(20) << left << str << right << setw(4) << str.size() << endl;
 
     /* Iterate over the vector and accumulate repeatments if current value equals to next one.
        If neighboring values are not equal, reset repeatment value to 1 and continue the loop.
@@ -74,7 +74,7 @@ int main()
         if (cur_reps > mode) mode = cur_reps;
         cur_reps = 1;
     }
-    cout << endl << setw(35) << left << "Min of the current sequence is " << right << setw(4) << fixed << strings[0].size() << endl;
-    cout << setw(35) << left << "Max of the current sequence is " << right << setw(4) << fixed << strings.back().size() << endl;
-    cout << setw(35) << left << "Mode of the current sequence is " << right << setw(4) << fixed << mode << endl;
+    cout << endl << setw(35) << left << "Min of the current sequence is " << right << setw(4) << strings[0].size() << endl;
+    cout << setw(35) << left << "Max of the current sequence is " << right << setw(4) << strings.back().size() << endl;
+    cout << setw(35) << left << "Mode of the current sequence is " << right << setw(4) << mode << endl;
 }
