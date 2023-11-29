@@ -20,7 +20,7 @@ int main()
     cout << "Total distance is " << sum << endl;
     cout << "Average distance between two neighboring cities is " << sum / distances.size() << endl;
     // cout << *min_element(distances.begin(), distances.end()) << endl;
-    cout << min_dist << endl;
+    cout << "The smallest distance between two neighboring cities is " << min_dist << endl;
     // cout << *max_element(distances.begin(), distances.end()) << endl;
-    cout << max_dist << endl;
+    cout << "The greatest distance between two neighboring cities is " << max_dist << endl;
     }
